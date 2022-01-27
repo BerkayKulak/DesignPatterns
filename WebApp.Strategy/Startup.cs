@@ -9,8 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseProject.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Strategy.Models;
+using WebApp.Strategy.Repositories;
 
 namespace BaseProject
 {
@@ -26,6 +29,32 @@ namespace BaseProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // httpcontexte eriþebilirim.
+            services.AddHttpContextAccessor();
+
+            // IProductRepository interface' i ile karþýlaþýldýðýnda bu interface'i implemente eden
+            // classlardan hangisi olacaðýný dinamik olarak cookiede tutulan claim deðerine göre belirliyorum.
+            // ilgili nesne örneðini dönüyorum.
+            services.AddScoped<IProductRepository>(sp =>
+            {
+                var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
+
+                var claim = httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == Settings.claimDatabaseType);
+
+                var context = sp.GetRequiredService<AppIdentityDbContext>();
+
+                if (claim == null) return new ProductRepositoryFromSqlServer(context);
+
+                var databaseType = (EDatabaseType)int.Parse(claim.Value);
+
+                return databaseType switch
+                {
+                    EDatabaseType.SqlServer => new ProductRepositoryFromSqlServer(context),
+                    EDatabaseType.MongoDb => new ProductRepositoryFromMongoDb(Configuration),
+                    _ => throw new NotImplementedException()
+                };
+            });
+
             services.AddDbContext<AppIdentityDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
