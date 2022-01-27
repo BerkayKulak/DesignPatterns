@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Strategy.Models;
 
-namespace BaseProject.Controllers
+namespace WebApp.Strategy.Controllers
 {
     public class HomeController : Controller
     {
