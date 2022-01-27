@@ -40,7 +40,7 @@ namespace WebApp.Strategy.Repositories
 
         public async Task Update(Product product)
         {
-         await   _productCollection.FindOneAndReplaceAsync(x=>x.Id==product.Id,product)
+            await _productCollection.FindOneAndReplaceAsync(x => x.Id == product.Id, product);
         }
 
         public async Task Delete(Product product)
