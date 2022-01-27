@@ -6,7 +6,7 @@
 @model Settings
 
 <form asp-controller="Settings" asp-action="ChangeDatabase" method="post">
-    <select asp-for="DatabaseType" asp-items="Html.GetEnumSelectList<EDatabaseType>()">
+    <select name="databaseType" asp-for="DatabaseType" asp-items="Html.GetEnumSelectList<EDatabaseType>()">
 
     </select>
     
