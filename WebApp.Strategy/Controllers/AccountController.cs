@@ -2,6 +2,7 @@
 using BaseProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Strategy.Controllers;
 
 namespace BaseProject.Controllers
 {
