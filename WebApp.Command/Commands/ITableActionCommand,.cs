@@ -1,6 +1,10 @@
-﻿namespace WebApp.Command.Commands
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+namespace WebApp.Command.Commands
 {
-    public class ITableButtonActionCommand
+    public interface ITableActionCommand
     {
+        IActionResult Execute();
     }
 }
