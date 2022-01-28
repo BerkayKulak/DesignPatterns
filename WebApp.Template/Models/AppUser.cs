@@ -6,6 +6,5 @@ namespace BaseProject.Models
     {
         public string PictureUrl { get; set; }
         public string Description { get; set; }
-
     }
 }
