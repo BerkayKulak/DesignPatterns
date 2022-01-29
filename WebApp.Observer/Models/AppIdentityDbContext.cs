@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Observer.Models;
 
 namespace BaseProject.Models
 {
@@ -9,5 +10,7 @@ namespace BaseProject.Models
         {
             
         }
+
+        public DbSet<Discount> Discounts { get; set; }
     }
 }
