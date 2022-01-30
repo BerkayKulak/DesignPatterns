@@ -20,26 +20,24 @@ namespace WebApp.Observer.Observer
         {
             var logger = _serviceProvider.GetRequiredService<ILogger<UserObserverSendEmail>>();
 
-            var mailMessage = new MailMessage();
+            MailMessage mail = new MailMessage();
 
-            var smtpClient = new SmtpClient("smtp.gmail.com");
+            // bunu host firmanızdan öğrenilir
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
 
-            mailMessage.From = new MailAddress("kulakberkay15@gmail.com");
+            // email kulakberkay15@gmail.com den  beko_468@hotmail.com ' e bir tane email gelecek
+            mail.From = new MailAddress("kulakberkay15@gmail.com");
 
-            mailMessage.To.Add(new MailAddress(appUser.Email));
-
-            mailMessage.Subject = "Sitemize Hoşgeldiniz";
-
-            mailMessage.Body = "<p>Sitemizin genel kuralları : xxxx...</p>";
-
-            mailMessage.IsBodyHtml = true;
-
+            // kime gidicek email burada belirtiyoruz
+            mail.To.Add("beko_468@hotmail.com");
+            mail.Subject = $"www.bıdıbıdı.com::Email doğrulama";
+            mail.Body = "<h2>Email adresinizi doğrulamak için lütfen aşağıdaki linke tıklayınız.</h2><hr/>";
+            mail.IsBodyHtml = true;
             smtpClient.Port = 587;
+            smtpClient.EnableSsl = true;
+            smtpClient.Credentials = new System.Net.NetworkCredential("kulakberkay15@gmail.com", "43795164825Fb");
+            smtpClient.Send(mail);
 
-            smtpClient.Credentials = new NetworkCredential("kulakberkay15@gmail.com", "43795164825Fb");
-
-            smtpClient.Send(mailMessage);
-            
             logger.LogInformation($"Email was send to user : {appUser.UserName}");
 
         }
