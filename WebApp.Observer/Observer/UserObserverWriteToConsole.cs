@@ -20,7 +20,6 @@ namespace WebApp.Observer.Observer
 
             logger.LogInformation($"user created : Id = {appUser.Id}");
 
-            throw new System.NotImplementedException();
         }
     }
 }
