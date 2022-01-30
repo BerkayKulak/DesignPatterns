@@ -22,7 +22,7 @@ namespace WebApp.Observer.Observer
 
             var mailMessage = new MailMessage();
 
-            var smtpClient = new SmtpClient("smtp.server.com");
+            var smtpClient = new SmtpClient("smtp.gmail.com");
 
             mailMessage.From = new MailAddress("kulakberkay15@gmail.com");
 
