@@ -10,6 +10,7 @@ using BaseProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using WebApp.Composite.Models;
 
 namespace BaseProject
 {
@@ -29,11 +30,45 @@ namespace BaseProject
 
             if (!userManager.Users.Any())
             {
-                userManager.CreateAsync(new AppUser() {UserName = "user1", Email = "user1@outlook.com"}, "Password12*").Wait();
+                var newUser = new AppUser() {UserName = "user1", Email = "user1@outlook.com"};
+
+                userManager.CreateAsync(newUser, "Password12*").Wait();
                 userManager.CreateAsync(new AppUser() {UserName = "user2", Email = "user2@outlook.com"}, "Password12*").Wait();
                 userManager.CreateAsync(new AppUser() {UserName = "user3", Email = "user3@outlook.com"}, "Password12*").Wait();
                 userManager.CreateAsync(new AppUser() {UserName = "user4", Email = "user4@outlook.com"}, "Password12*").Wait();
                 userManager.CreateAsync(new AppUser() {UserName = "user5", Email = "user5@outlook.com"}, "Password12*").Wait();
+
+                var newCategory1 = new Category() {Name = "Suç Romanlarý", ReferenceId = 0, UserId = newUser.Id};
+
+                var newCategory2 = new Category() {Name = "Cinayet Romanlarý", ReferenceId = 0, UserId = newUser.Id};
+
+                var newCategory3 = new Category() {Name = "Polisiye Romanlarý", ReferenceId = 0, UserId = newUser.Id};
+
+                identityDbContext.Categories.AddRange(newCategory1,newCategory2,newCategory3);
+
+                identityDbContext.SaveChanges();
+
+                var subCategory1 = new Category()
+                    {Name = "Suç Romanlarý 1", ReferenceId = newCategory1.Id, UserId = newUser.Id};
+
+                var subCategory2 = new Category()
+                    { Name = "Cinayet Romanlarý 1", ReferenceId = newCategory2.Id, UserId = newUser.Id };
+
+                var subCategory3 = new Category()
+                    { Name = "Polisiye Romanlarý 1", ReferenceId = newCategory3.Id, UserId = newUser.Id };
+
+                identityDbContext.Categories.AddRange(subCategory1,subCategory2,subCategory3);
+
+                identityDbContext.SaveChanges();
+
+
+                var subCategory4 = new Category()
+                    { Name = "Cinayet Romanlarý 1.1", ReferenceId = subCategory2.Id, UserId = newUser.Id };
+
+                identityDbContext.Categories.Add(subCategory4);
+
+                identityDbContext.SaveChanges();
+
             }
 
             host.Run();
