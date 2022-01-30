@@ -30,8 +30,11 @@ namespace BaseProject
             services.AddSingleton<UserObserverSubject>(sp =>
             {
                 UserObserverSubject subject = new UserObserverSubject();
+
                 subject.RegisterObserver(new UserObserverWriteToConsole(sp));
+
                 subject.RegisterObserver(new UserObserverCreateDiscount(sp));
+
                 subject.RegisterObserver(new UserObserverSendEmail(sp));
 
                 return subject;
@@ -45,6 +48,7 @@ namespace BaseProject
             services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
+                options.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
 
             services.AddControllersWithViews();
