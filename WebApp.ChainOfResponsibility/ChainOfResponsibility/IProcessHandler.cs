@@ -7,4 +7,5 @@ namespace WebApp.ChainOfResponsibility.ChainOfResponsibility
         IProcessHandler SetNext(IProcessHandler processHandler);
         Object Handle(Object o);
     }
+
 }
