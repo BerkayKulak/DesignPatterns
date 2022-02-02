@@ -12,6 +12,8 @@ using BaseProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
+using WebApp.Decorator.Models;
 using WebApp.Decorator.Repositories;
 using WebApp.Decorator.Repositories.Decorator;
 
@@ -38,13 +40,15 @@ namespace BaseProject
 
                 var productRepository = new ProductRepository(context);
 
+                var logService = sp.GetRequiredService<ILogger<ProductRepositoryLoggingDecorator>>();
+
                 var cacheDecorator = new ProductRepositoryCacheDecorator(productRepository,memoryCache);
 
-                return cacheDecorator;
+                var logDecorator = new ProductRepositoryLoggingDecorator(cacheDecorator, logService);
+
+                return logDecorator;
 
             });
-
-
 
             services.AddDbContext<AppIdentityDbContext>(options =>
             {
