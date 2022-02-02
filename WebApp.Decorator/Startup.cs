@@ -32,23 +32,33 @@ namespace BaseProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
-            services.AddScoped<IProductRepository>(sp =>
-            {
-                var context = sp.GetRequiredService<AppIdentityDbContext>();
 
-                var memoryCache = sp.GetRequiredService<IMemoryCache>();
+            // 2. yol
 
-                var productRepository = new ProductRepository(context);
+            services.AddScoped<IProductRepository, ProductRepository>().
+                Decorate<IProductRepository,ProductRepositoryCacheDecorator>().
+                Decorate<IProductRepository,ProductRepositoryLoggingDecorator>();
 
-                var logService = sp.GetRequiredService<ILogger<ProductRepositoryLoggingDecorator>>();
 
-                var cacheDecorator = new ProductRepositoryCacheDecorator(productRepository,memoryCache);
+            //1. yol
 
-                var logDecorator = new ProductRepositoryLoggingDecorator(cacheDecorator, logService);
+            //services.AddScoped<IProductRepository>(sp =>
+            //{
+            //    var context = sp.GetRequiredService<AppIdentityDbContext>();
 
-                return logDecorator;
+            //    var memoryCache = sp.GetRequiredService<IMemoryCache>();
 
-            });
+            //    var productRepository = new ProductRepository(context);
+
+            //    var logService = sp.GetRequiredService<ILogger<ProductRepositoryLoggingDecorator>>();
+
+            //    var cacheDecorator = new ProductRepositoryCacheDecorator(productRepository,memoryCache);
+
+            //    var logDecorator = new ProductRepositoryLoggingDecorator(cacheDecorator, logService);
+
+            //    return logDecorator;
+
+            //});
 
             services.AddDbContext<AppIdentityDbContext>(options =>
             {
