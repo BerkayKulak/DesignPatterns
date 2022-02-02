@@ -39,6 +39,14 @@ namespace WebApp.Composite.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Index(int categoryId, string bookName)
+        {
+            await _context.Books.AddAsync(new Book() {CategoryId = categoryId, Name = bookName});
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
         public BookComposite GetMenus(List<Category> categories, Category topCategory, BookComposite topBookComposite,
             BookComposite last = null)
         {
