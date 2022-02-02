@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebApp.Composite.Composite
 {
@@ -58,5 +59,29 @@ namespace WebApp.Composite.Composite
             return sb.ToString();
 
         }
+
+        public List<SelectListItem> GetSelectListItems(string line)
+        {
+            var list = new List<SelectListItem> {new($"{line}{Name}", Id.ToString())};
+
+            if (_components.Any(x => x is BookComposite))
+            {
+                line += " - ";
+            }
+
+            _components.ForEach(x =>
+            {
+                if (x is BookComposite bookComposite)
+                {
+                    list.AddRange(bookComposite.GetSelectListItems(line));
+                }
+
+            });
+
+            return list;
+
+        }
+
+
     }
 }
