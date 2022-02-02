@@ -34,6 +34,8 @@ namespace WebApp.Composite.Controllers
 
             ViewBag.menu = menu;
 
+            ViewBag.selectList = menu.Components.SelectMany(x => ((BookComposite) x).GetSelectListItems(""));
+
             return View();
         }
 
