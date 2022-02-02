@@ -4,6 +4,18 @@
     ViewData["Title"] = "Index";
     var menu = @ViewBag.menu as BookComposite;
 }
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("ul").hide();
+            $(".menu").click(function(e) {
+                e.preventDefault();
+                $(this).parent().next().toggle();
+            });
+        })
+    </script>
+}
 
 <form asp-controller="CategoryMenu" asp-action="Index" method="post">
 
