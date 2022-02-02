@@ -5,9 +5,12 @@
     var menu = @ViewBag.menu as BookComposite;
 }
 
-<div>
-    <select asp-items="ViewBag.selectList"></select>
-</div>
+<form asp-controller="CategoryMenu" asp-action="Index" method="post">
+
+    <select name="categoryId" asp-items="ViewBag.selectList"></select>
+    <input type="text" name="bookName"/>
+    <input type="submit" value="Save"/>
+</form>
 
 <div class="row mt-5">
     <div class="col-md-4">
