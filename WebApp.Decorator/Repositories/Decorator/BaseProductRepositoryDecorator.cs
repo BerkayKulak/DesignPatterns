@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using WebApp.Decorator.Models;
 
-namespace WebApp.Decorator.Repositories
+namespace WebApp.Decorator.Repositories.Decorator
 {
     public class BaseProductRepositoryDecorator:IProductRepository
     {
