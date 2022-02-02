@@ -1,0 +1,22 @@
+﻿@using WebApp.Composite.Composite
+
+@{
+    ViewData["Title"] = "Index";
+    var menu = @ViewBag.menu as BookComposite;
+}
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card bg-light">
+            <div class="card-header">
+                Toplam Kitap(@menu.Count())
+            </div>
+            <div class="card-body">
+                @foreach (var item in menu.Components)
+                {
+                    @Html.Raw(item.Display())
+                }
+            </div>
+        </div>
+    </div>
+</div>

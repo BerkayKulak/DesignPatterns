@@ -11,10 +11,12 @@ namespace WebApp.Composite.Composite
 
         private List<IComponent> _components;
 
+        public IReadOnlyCollection<IComponent> Components => _components;
         public BookComposite(int id,string name)
         {
             Id = id;
             Name = name;
+            _components = new List<IComponent>();
 
         }
 
@@ -44,7 +46,7 @@ namespace WebApp.Composite.Composite
                 return sb.ToString();
             }
 
-            sb.Append("<ul class='list-group list-group-flush ml-3'>");
+            sb.Append("<ul class='list-group list-group-flush ms-3'>");
 
             foreach (var component in _components)
             {
