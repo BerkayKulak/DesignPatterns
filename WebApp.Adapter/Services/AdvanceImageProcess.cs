@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.IO;
+using LazZiya.ImageResize;
 
 namespace WebApp.Adapter.Services
 {
